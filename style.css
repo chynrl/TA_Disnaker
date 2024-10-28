@@ -1,0 +1,67 @@
+:root{
+    --navbar-height: 60px;
+    --footer-height: 40px;
+}
+
+
+html, body{
+    height: 100%;
+    background-color: rgb(237, 255, 242);
+}
+.custom-bs-navbar{
+    background: rgb(90, 199, 135);
+    min-height: var(--navbar-height);
+}
+.my-footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: var(--footer-height);
+    background:rgb(90, 199, 135);
+    padding: 24px 24px;
+    
+}
+.my-footer address{
+    margin: auto;
+}
+.content-section{
+    min-height: calc(100% - var(--navbar-height) - var(--footer-height));
+    margin: 100px;
+}
+.section{
+    height: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.section-satu{
+    padding: 20px;
+}
+.section-satu  .content-section-satu  .row  .col-sm-6{
+    text-align: justify;
+    
+}
+.section-satu  .content-section-satu  .row  .col-sm-6 .card{
+    text-align: justify;
+    padding: 20px;
+    height: auto;
+    border-color: rgb(90, 199, 135);
+    
+}
+
+.section-dua{
+    padding: 20px;
+}
+.list-produk{
+    justify-content: center;
+}
+.carousel{
+    width: 600px;
+}
+.carousel-inner{
+    height: 300px;
+}
+.carousel-item > img-carousel{
+    object-fit: contain;
+    
+}

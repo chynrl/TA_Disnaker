@@ -1,0 +1,26 @@
+body{
+    background-image: url('../gambar/gambar1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 150px;
+
+}
+
+.card{
+    width:500px;
+    background-color: rgb(35, 122, 43);
+    color: white;
+}
+.alert{
+    width: fit-content;
+    height: 38px;
+    font-size: small;
+    justify-content: center;
+}
