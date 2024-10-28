@@ -1,3 +1,15 @@
+<?php
+require 'connection.php';
+ 
+  $data_trayek = myquery("SELECT * FROM tb_trayek");
+
+  $data = myquery("SELECT a.id_angkot, a.plat_nomer, a.masa_pajak, a.deskripsi, a.garasi, t.kode_trayek, t.nama_trayek
+    FROM tb_angkot as a
+    inner join tb_trayek as t 
+    on a.trayek = t.id_trayek");
+    
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -106,16 +118,16 @@
         <div class="col-sm-6">
           <a href="list_produk.php"> <i class="fa-solid fa-arrow-left"></i> Kembali</a>
           <div class="col-12 my-8">
-              <h2>Angkot Trayeknya</h2>
-              <p>Plat nomer : </p>
-              <p>Nama Supir : </p>
-              <p>Masa Pajak : </p>
-              <p>Alamat Garasi : </p>
+              <h2><?= $data[0]['kode_trayek'] . " " . $data[0]['nama_trayek'];?></h2>
+              <p>Plat nomer : <?= $data[0]['plat_nomer'];?></p>
+              <p>Nama Supir : <?= $data[0]['plat_nomer'];?></p>
+              <p>Masa Pajak : <?= $data[0]['masa_pajak'];?></p>
+              <p>Alamat Garasi : <?= $data[0]['garasi'];?></p>
               <hr>
-              <p>deskrispsi</p>
+              <p>Deskrispsi</p>
+              <p><?= $data[0]['deskripsi'];?></p>
 
               <button type="button" class="btn btn-success my-3"> <i class="fa-brands fa-whatsapp"></i> Sewa Sekarang</button>
-
 
 
             </div>

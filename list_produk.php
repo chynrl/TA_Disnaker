@@ -1,3 +1,13 @@
+<?php
+require 'connection.php';
+  $data_trayek = myquery("SELECT * FROM tb_trayek");
+
+  $data = myquery("SELECT a.id_angkot, a.plat_nomer, a.masa_pajak, a.deskripsi, a.garasi, t.kode_trayek, t.nama_trayek
+    FROM tb_angkot as a
+    inner join tb_trayek as t 
+    on a.trayek = t.id_trayek");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -85,6 +95,7 @@
         </form>
         <div class="row">
           <div class=col-8>
+            <?php foreach($data as $row): ?>
             <div class="card mb-3" style="max-width: 540px;">
               <div class="row g-0">
                 <div class="col-md-4">
@@ -96,26 +107,27 @@
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
-                    <h5 class="card-title">Trayek Angkot</h5>
+                    <h5 class="card-title"><?= $row['kode_trayek'] . " " . $row['nama_trayek']?></h5>
                     <div class="mb-3">
-                      <h6>Alamat Garasi :</h6>
-                      <p>jalan-jalan ae</p>
+                      <h6>Alamat Garasi : </h6>
+                      <p><?= $row['garasi']?></p>
                     </div>
-                    <a href="" class="btn btn-success">Lihat Detail</a>
+                    <a href="detail_product.php?id=<?= $row['id_angkot']?>" class="btn btn-success">Lihat Detail</a>
                   </div>
                 </div>
               </div>
             </div>
+            <?php endforeach?>
           </div>
           <div class="col-4">
             <div class="card">
               <div class="p-2">
               <h6>Filter Trayek</h6>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Default checkbox
-                </label>
+                <?php foreach($data_trayek as $option): ?>
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                  <label class="form-check-label" for="flexCheckDefault"><?= $option['nama_trayek'] ?></label>
+                <?php endforeach; ?>
               </div>
               </div>
             </div>

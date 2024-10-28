@@ -169,12 +169,24 @@
         <div class="section-dua">
           <div class="container">
             <div class="content-section-satu">
-            <h1 align="center">Cara Memesan</h1>
+            <h1 align="center" style="font-size: 60px; margin-botton : 10px">Cara Memesan</h1>
             <div class="row">
-              <div class="col-3"><h3>Lihat angkot yang siap di carter <a href="">disini</a></h3></div>
-              <div class="col-3">Lihat detail</div>
-              <div class="col-3">hubungi supir melaui Nomer wa</div>
-              <div class="col-3">buat janji denga supir</div>
+              <div class="col-3">
+                <h1 style="font-size: 60px;">1.</h1>
+                <h5>Lihat daftar angkot yang siap dicarter <a href="">disini</a></h5>
+              </div>
+              <div class="col-3">
+                <h1 style="font-size: 60px;">2.</h1>
+                <h5>Lihat detail dari angkot yang dipilih</h5>
+              </div>
+              <div class="col-3">
+                <h1 style="font-size: 60px;">3.</h1>
+              <h5>Hubungi lansung supir melalui whatsapp dengan menekan tombol hijau</h5>
+              </div>
+              <div class="col-3">
+              <h1 style="font-size: 60px;">4.</h1>
+              <h5>Diskusi dan buat janji dengan supir</h5>
+              </div>
             </div>
             </div>
           </div>

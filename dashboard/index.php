@@ -1,3 +1,8 @@
+<?php
+  require '../connection.php';
+  $data = myquery("SELECT * FROM tb_drivers ");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -93,29 +98,17 @@
                       <img src="./driver-silhouette.jpg" class="card-img-top rounded-circle" alt="..." style="width: 200px; height: 200px;">
                     </div>
                               <div class="card-body">
-                              <h5 class="card-title">Isi nama</h5>
-                              <a href="#" class="btn btn-secondary">Edit profil</a>
+                              <?php foreach($data as $row):?>
+                              <h5 class="card-title"><?= $row['nama'] ?></h5>
+                              <a href="#" class="btn btn-secondary" type="submit" name="submit_update" >Edit profil</a>
                               
                           
                           <div class="content-profil text-start">
-                              <table>
-                                  <tbody>
-                                      <tr>
-                                          <td><strong>Nama</strong></td>
-                                      </tr>
-                                      <tr>
-                                          <td>Isi nama </td>
-                                      </tr>
-                                      <tr>
-                                          <td><strong>Alamat</strong></td>
-                                      </tr>
-                                      <tr>
-                                          <td>jalan nin aja dulu </td>
-                                      </tr>
-                                  </tbody>
-                              </table>
+                            <p><strong>Usia: </strong> <?= $row['usia']?> </p>
+                            <p><strong>No Whatsapp :</strong> <?= $row['no_wa']?></p>
+                            <p><strong>Alamat :</strong> <?= $row['alamat']?> </p>
                           </div>
-                      
+                        <?php endforeach?>
                   </div>
             </div>
           </div>

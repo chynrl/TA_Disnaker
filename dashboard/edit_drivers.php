@@ -1,12 +1,22 @@
 <?php
     $GET['action'] = 'edit';
-    require 'function.php';
+    require '../function.php';
 
-    $id = $GET['id_drivers'];
-    $data_drivers = myquery("SELECT * FROM tb_drivers WHERE id_drivers = $id");
+    $id_drivers = $GET['id_drivers'];
+
+    $data_drivers = myquery("SELECT * FROM tb_drivers WHERE id_drivers = $id_drivers");
     $data_alamat = myquery("SELECT * FROM tb_trayek");
 
-    if(isset($_POST['']))
+    if(isset($_POST['submit_update'])){
+      if (update(($_POST) > 0)){
+        echo"<script>alert('Data Berhasil diubah');
+        document.location.href = 'index.php';
+        </script>";
+      }else{
+        echo "<script>alert('Data Gagal Diubah');
+        </script>";
+      }
+    }
 
 ?>
 

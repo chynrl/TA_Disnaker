@@ -2,9 +2,9 @@
 require 'connection.php';
 
 //jika terdapat 'action' dan 'id' maka melakukan sesuatu
-    if(isset($_GET['action']) && isset($_GET['id'])){
+    if(isset($_GET['action']) && isset($_GET['id_drivers'])){
         $action = $_GET['action'];
-        $id = $_GET['id'];
+        $id = $_GET['id_drivers'];
 
         switch($action){
             case 'delete':
@@ -22,8 +22,8 @@ require 'connection.php';
     }
 
     function delete_data($id){
-        global $connection;
-        $res = mysqli_query($connection, "DELETE FROM tb_person WHERE id = " .$id);
+        global $conn;
+        $res = mysqli_query($conn, "DELETE FROM tb_person WHERE id = " .$id);
 
         if($res){
             header("Location: index.php?messages=Data berhasil dihapus");
@@ -35,7 +35,7 @@ require 'connection.php';
     }
 
     function update($data){
-        global $connection;
+        global $conn;
 
         $id = $data['id_drivers'];
         $nama = $data['txt_nama'];
@@ -47,12 +47,12 @@ require 'connection.php';
         nama = '$nama',
         usia = '$usia',
         no_wa = '$nomer'
-        alamat = $alamat, 
+        alamat = '$alamat' 
         WHERE id_drivers = $id
         ";
 
-        mysqli_query($connection, $query);
-        return mysqli_affected_rows($connection);
+        mysqli_query($conn, $query);
+        return mysqli_affected_rows($conn);
     };
 
 
