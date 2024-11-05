@@ -1,0 +1,71 @@
+
+    body {
+      background-color: rgb(237, 255, 242);
+    }
+
+    .card {
+      background-color: rgba(113, 175, 139, 0.5);
+    }
+
+    .card-title {
+      color: black;
+    }
+
+    .search-container {
+      display: flex;
+      align-content: center;
+      align-items: center;
+    }
+
+    .user {
+      object-fit: contain;
+      width: 30px;
+      height: 30px;
+    }
+
+    .btn {
+      margin: 5px;
+      max-width: fit-content;
+      justify-content: center;
+    }
+    .btn-primary {
+            position: relative;
+            padding: 10px 15px;
+            font-size: 13px;
+            cursor: pointer;
+
+        }
+
+        .btn-primary:hover::after {
+            content: "Edit";
+            position: absolute;
+            top: 150%;
+            left: 5%; /* Menempatkan teks di sebelah kanan tombol */
+            transform: translateY(-50%);
+            background-color: #007bff;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            white-space: nowrap;
+            opacity: 0.9;
+        }
+        .btn-danger {
+            position: relative;
+            padding: 10px 15px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .btn-danger:hover::after {
+            content: "Hapus";
+            position: absolute;
+            top: 150%;
+            left: 5%; /* Menempatkan teks di sebelah kanan tombol */
+            transform: translateY(-50%);
+            background-color: #DC3545;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            white-space: nowrap;
+            opacity: 0.9;
+        }

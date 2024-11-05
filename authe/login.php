@@ -1,21 +1,41 @@
 <?php
-  require '../connection.php';
+session_start();
+require '../connection.php';
 
-  if(isset($_POST['submit_login'])){
-      $email = $_POST['txt-email-masuk'];
-      $password = $_POST['txt-password-masuk'];
+if (isset($_SESSION['email'])) {
+    header("Location: ../dashboard/index.php");
+    exit();
+}
 
-      $query_login = "SELECT * FROM tb_users WHERE email = '$email' AND password = '$password'";
+if (isset($_POST['submit_login'])) {
+    $email = $_POST['txt-email-masuk'];
+    $password = $_POST['txt-password-masuk'];
 
-      $res = mysqli_query($conn, $query_login);
+    
+    $query_login = "SELECT * FROM tb_users WHERE email = '$email' AND password = '$password'";
 
-      if(mysqli_num_rows($res) > 0){
-        header("Location: ../dashboard/index.html");
-        exit();
-      }else{
+    $res = mysqli_query($conn, $query_login);
+    $data_user = mysqli_fetch_assoc($res);
+
+    if ($data_user) {
+        $id_user = $data_user['id__users'];
+        $username = $data_user['username']; 
+
+        
+        if (mysqli_num_rows($res) > 0) {
+            $_SESSION['email'] = $email;
+            $_SESSION['id__users'] = $id_user;
+            $_SESSION['username'] = $username;
+            
+            header("Location: ../dashboard/index.php");
+            exit();
+        } else {
+            $err = "Data Tidak Sesuai";
+        }
+    } else {
         $err = "Data Tidak Sesuai";
-      }
-  }
+    }
+}
 ?>
 
 <!doctype html>

@@ -7,6 +7,7 @@ if (isset($_POST['submit_register'])) {
   $email = $_POST['txt-email-daftar'];
   $password = $_POST['txt-password-daftar'];
 
+
   $check_username = "SELECT * FROM tb_users WHERE username = '$username'";
   $result_username = mysqli_query($conn, $check_username);
 
@@ -15,23 +16,35 @@ if (isset($_POST['submit_register'])) {
 
   if (mysqli_num_rows($result_username) > 0) {
     $message = "Username sudah digunakan";
-  } elseif (mysqli_num_rows($result_email)) {
+  } elseif (mysqli_num_rows($result_email) > 0) {
     $message = "Email sudah digunakan";
   } else {
-    $query_insert = "INSERT INTO tb_users(username, email, password)
-                        VALUES ('$username', '$email', '$password')";
+
+    $query_insert = "INSERT INTO tb_users (username, email, password) VALUES ('$username', '$email', '$password')";
     $res = mysqli_query($conn, $query_insert);
 
     if ($res) {
-      $message = "Pendaftaran akun berhasil. Silahkan login.";
-      echo "<script>
-      function redirection(){
-        document.location.href = 'login.php';
+      $newid = mysqli_insert_id($conn);
+      $query_driver_insert = "INSERT INTO tb_drivers (id_users, nama) VALUES ('$newid', '$username')";
+      $res_driver = mysqli_query($conn, $query_driver_insert);
+
+      // Insert id_user ke tabel tb_angkot
+      // $query_angkot_insert = "INSERT INTO tb_angkot (id_users) VALUES ('$newid')";
+      // $res_angkot = mysqli_query($conn, $query_angkot_insert);
+
+      if ($res_driver && $res) {
+        $message = "Pendaftaran akun berhasil. Silahkan login.";
+        echo "<script>
+        function redirection(){
+          document.location.href = 'login.php';
+        }
+        setTimeout(redirection, 1000);
+        </script>";
+      } else {
+        $message = "Gagal menambahkan data ke tabel drivers atau tb_angkot.";
       }
-      setTimeout(redirection, 2000);
-      </script>";
     } else {
-      $message = "Pendaftaran gagal dilakukan";
+      $message = "Pendaftaran gagal dilakukan.";
     }
   }
 }
@@ -65,8 +78,8 @@ if (isset($_POST['submit_register'])) {
       <form method="POST">
         <div class="card-body">
           <div class="mb-3">
-            <label for="txt-username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="txt-username" name="txt-username" placeholder="Masukan Username">
+            <label for="txt-username" class="form-label">Nama</label>
+            <input type="text" class="form-control" id="txt-username" name="txt-username" placeholder="Masukan nama anda">
           </div>
           <div class="mb-3">
             <label for="txt-email-daftar" class="form-label">Email</label>
@@ -78,7 +91,7 @@ if (isset($_POST['submit_register'])) {
           </div>
           <div class="d-grid gap-2 col-8 mx-auto">
             <button class="btn btn-success" type="submit" name="submit_register">Daftar</button>
-            <p class="text-center">Sudah punya akun <a href="./login.html">masuk di sini!</a></p>
+            <p class="text-center">Sudah punya akun <a href="./login.php">masuk di sini!</a></p>
           </div>
         </div>
 

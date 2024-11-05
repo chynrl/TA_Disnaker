@@ -1,13 +1,24 @@
 <?php
 require 'connection.php';
- 
-  $data_trayek = myquery("SELECT * FROM tb_trayek");
+session_start();
 
-  $data = myquery("SELECT a.id_angkot, a.plat_nomer, a.masa_pajak, a.deskripsi, a.garasi, t.kode_trayek, t.nama_trayek
-    FROM tb_angkot as a
-    inner join tb_trayek as t 
-    on a.trayek = t.id_trayek");
-    
+if (isset($_GET['id_angkot'])) {
+  $id_angkot = $_GET["id_angkot"];
+} else {
+  echo "ID tidak ditemukan";
+}
+
+$data = "SELECT a.id_angkot, a.plat_nomer, a.masa_pajak, a.deskripsi, a.garasi, t.kode_trayek, t.nama_trayek, d.nama, d.no_wa, a.img_angkot 
+    FROM tb_angkot as a 
+    join tb_trayek as t on a.trayek = t.id_trayek 
+    join tb_drivers as d on a.id_drivers = d.id_drivers
+    where id_angkot = $id_angkot
+    ";
+$res = mysqli_query($conn, $data);
+$tampil = mysqli_fetch_array($res);
+
+$pesan_wa = "Hallo Pak, saya berminat menyarter angkot, bisakah kita berdiskusi dulu?";
+
 ?>
 
 <!DOCTYPE html>
@@ -30,13 +41,13 @@ require 'connection.php';
   <!-- navbar start -->
   <nav class="navbar navbar-expand-lg custom-bs-navbar sticky-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="landing_page.php">
         <img
           src="https://4.bp.blogspot.com/-DpeOzt3aii8/VuEhcIPogyI/AAAAAAAADk4/_AqTv2_5PlQ/s1600/angkot.png"
           alt="Bootstrap"
           width="50"
           height="35"
-          style="margin-left: 20px" />
+          style="margin-left: 20px" /> Nyarter Angkot
       </a>
       <button
         class="navbar-toggler"
@@ -51,10 +62,13 @@ require 'connection.php';
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mx-auto">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="./index.html">Beranda</a>
+            <a
+              class="nav-link active"
+              aria-current="page"
+              href="landing_page.php"><strong>Beranda</strong> </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./Gallery.html">Nyarter Lansung</a>
+            <a class="nav-link" href="list_angkot.php"><strong>Nyarter Lansung</strong> </a>
           </li>
           <li class="nav-item dropdown">
             <a
@@ -63,19 +77,30 @@ require 'connection.php';
               role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false">
-              Daftar Penyarter
+              <strong>Daftar Penyarter</strong>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li>
-                <a class="dropdown-item" href="register.html">Daftar</a>
+                <a class="dropdown-item" href="authe/register.php">Daftar</a>
               </li>
               <li>
-                <a class="dropdown-item" href="login.html">Masuk</a>
+                <a class="dropdown-item" href="authe/login.php">Masuk</a>
               </li>
             </ul>
           </li>
         </ul>
       </div>
+      <?php if(isset($_SESSION['email'])):?>
+        <div class="dropdown" style="background-color: rgb(90, 199, 135);">
+          <a class="btn btn-secondary dropdown-toggle border-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: transparent;">
+            <img src="./gambar/R.png" alt="User" class="user rounded-circle me-2" style="object-fit: cover; width : 30px; height: 30px;">
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="./dashboard/index.php">Dashboard</a></li>
+            <li><a class="dropdown-item" href="./authe/logout.php" name="submit_logout">Logout</a></li>
+          </ul>
+        </div>
+        <?php endif?>
     </div>
   </nav>
   <!-- navbar end -->
@@ -86,8 +111,8 @@ require 'connection.php';
       <div class="card">
         <div class="card-body">
           <div class="row">
-          <div class="col-sm-6">
-            <div id="carouselExampleIndicators" class="carousel slide">
+            <div class="col-sm-12 col-lg-6">
+              <!-- <div id="carouselExampleIndicators" class="carousel slide">
               <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -112,29 +137,33 @@ require 'connection.php';
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
               </button>
+            </div> -->
+              <div class="card" style="width: 600px; height: 400px;">
+                <img src="./uploaded_images/<?php echo $tampil['img_angkot']; ?>" class="img-fluid rounded" alt="gambar angkot" style="height: 100%; width: 100%; object-fit :cover; display: flex;">
+              </div>
             </div>
-            
-        </div>
-        <div class="col-sm-6">
-          <a href="list_produk.php"> <i class="fa-solid fa-arrow-left"></i> Kembali</a>
-          <div class="col-12 my-8">
-              <h2><?= $data[0]['kode_trayek'] . " " . $data[0]['nama_trayek'];?></h2>
-              <p>Plat nomer : <?= $data[0]['plat_nomer'];?></p>
-              <p>Nama Supir : <?= $data[0]['plat_nomer'];?></p>
-              <p>Masa Pajak : <?= $data[0]['masa_pajak'];?></p>
-              <p>Alamat Garasi : <?= $data[0]['garasi'];?></p>
-              <hr>
-              <p>Deskrispsi</p>
-              <p><?= $data[0]['deskripsi'];?></p>
+            <div class="col-sm-12 col-lg-6">
+              <a href="list_angkot.php" style="color: green;"> <i class="fa-solid fa-arrow-left"></i> Kembali</a>
+              <div class="col-sm-12 my-8">
+                <form action="" method="GET">
+                  <h2><?= $tampil['kode_trayek'] . " " . $tampil['nama_trayek']; ?></h2>
+                  <p>Plat nomer : <?= $tampil['plat_nomer']; ?></p>
+                  <p>Nama Supir : <?= $tampil['nama']; ?></p>
+                  <p>Masa Pajak : <?= $tampil['masa_pajak']; ?></p>
+                  <p>Alamat Garasi : <?= $tampil['garasi']; ?></p>
+                  <hr>
+                  <p>Deskrispsi</p>
+                  <p><?= $tampil['deskripsi']; ?></p>
 
-              <button type="button" class="btn btn-success my-3"> <i class="fa-brands fa-whatsapp"></i> Sewa Sekarang</button>
-
-
+                  <a type="button" class="btn btn-success my-3"
+                    href=<?php echo 'https://wa.me/' . $tampil['no_wa'] . '?text=' . urlencode($pesan_wa); ?> target="_blank">
+                    <i class="fa-brands fa-whatsapp"></i> Sewa Sekarang</a>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-          </div>
-         
+
 
       </div>
     </div>

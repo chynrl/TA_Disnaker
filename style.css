@@ -37,15 +37,17 @@ html, body{
 .section-satu{
     padding: 20px;
 }
-.section-satu  .content-section-satu  .row  .col-sm-6{
+.section-satu > .content-section-satu > .row > .col-sm-12{
     text-align: justify;
     
 }
-.section-satu  .content-section-satu  .row  .col-sm-6 .card{
+.section-satu > .content-section-satu > .row > .col-sm-12 > .text-content{
     text-align: justify;
     padding: 20px;
-    height: auto;
+    height: 500px;
     border-color: rgb(90, 199, 135);
+    background-color: rgb(123, 216, 162);
+    border-radius: 30px
     
 }
 
@@ -65,3 +67,10 @@ html, body{
     object-fit: contain;
     
 }
+img.list{
+    height: auto; 
+    object-fit :cover; 
+    display: flex;
+    align-items: center;
+}
+
